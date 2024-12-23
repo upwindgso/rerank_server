@@ -1,9 +1,9 @@
 import requests
 
-def call_llm_service(query, passages):#, use_llm=False):
+def call_llm_service(query, passages, use_llm=False):
     response = requests.post(
         "http://localhost:8000/rerank",
-        json={"query": query, "passages": passages}#, "use_llm": use_llm}
+        json={"query": query, "passages": passages, "use_llm": use_llm}
     )
     return response.json()["response"]
 
@@ -16,13 +16,15 @@ if __name__ == "__main__":
         "Paris is the capital of France.",
         "Berlin is the capital of Germany."
     ]
+    use_llm = True
+
     import time
 
     # Pre-code: Start the timer
     start_time = time.time()
 
     # The line of code you want to measure
-    scores = call_llm_service(query, passages)#, use_llm=False)
+    scores = call_llm_service(query, passages, use_llm)
 
     # Post-code: Stop the timer and calculate elapsed time in milliseconds
     end_time = time.time()

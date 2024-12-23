@@ -9,6 +9,7 @@ This server can be used to rerank search results or any other list of items base
 
 2. in the models/ directory clone the model with:
 git clone https://huggingface.co/BAAI/bge-reranker-v2-m3
+git clone https://huggingface.co/BAAI/bge-reranker-v2-gemma
 
 3. build the docker image:  
 docker buildx build . -t rerank-server:latest
@@ -33,10 +34,11 @@ python test_the_server.py
 
 # Usage
 The server exposes a single endpoint at /rerank which accepts a POST request with the following JSON payload:   
-json={"query": query, "passages": passages}
+json={"query": str, "passages": [str], "use_llm" : bool = False}
 
 - `query`: A string representing the search query or any other input text.  
 - `passages`: An array of strings where each string is a passage or item to be ranked.
+- `use_llm`: A boolean flag that determines whether to use a language model for ranking (default is False). If set to True, the server will utilize an LLM v2 gemma modelto rank the passages based on their relevance to the query. If set to False, the server will rely on the v2 m3 model for ranking.
 
 The server will return a JSON response with the following structure:  
 [float]

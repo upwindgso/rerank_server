@@ -3,9 +3,9 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Install only essential build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get install -y \
     build-essential \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy and install requirements
 COPY requirements.txt .
