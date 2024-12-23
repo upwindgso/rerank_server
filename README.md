@@ -13,8 +13,22 @@ git clone https://huggingface.co/BAAI/bge-reranker-v2-m3
 3. build the docker image:  
 docker buildx build . -t rerank-server:latest
 
-4. run the server: 
+4. slim the image
+from powershell:
+docker pull dslim/slim
+docker run -it -v /var/run/docker.sock:/var/run/docker.sock dslim/slim
+build --target rerank-server:latest
+exit
+
+delete the old rerank-server container then image
+run the new rerank-server.slim image remembering to set the port to 8000 and giving it the container name rerank-server
+
+5. run the server: 
 docker run -p 8000:8000 rerank-server
+
+6. test the server
+cd tests
+python test_the_server.py
 
 
 # Usage
