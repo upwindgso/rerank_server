@@ -60,6 +60,9 @@ class RerankRequest(BaseModel):
     passages: List[str]
     use_llm: Optional[bool] = False
 
+@app.get("/")
+async def root():
+    return {"status": "ok"}
 
 @app.post("/rerank")
 async def rerank(request: RerankRequest):
@@ -69,5 +72,7 @@ async def rerank(request: RerankRequest):
     print(f"Received use_llm: {request.use_llm}")
 
     return {"response": rerank_results(request.query, request.passages, request.use_llm)}
+
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
